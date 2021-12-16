@@ -17805,3 +17805,62 @@ void CoreChecks::PostCallRecordGetQueryPoolResults(VkDevice device, VkQueryPool 
         }
     }
 }
+
+bool CoreChecks::PreCallValidateGetImageCompressionPropertiesEXT(VkDevice device, VkImage image, VkImageAspectFlags aspectMask,
+                                                                 VkImageCompressionPropertiesEXT *pProperties) const {
+    bool skip = false;
+
+    const auto image_state = Get<IMAGE_STATE>(image);
+    if (image_state) {
+        VkFormat image_format = image_state->createInfo.format;
+        if (FormatIsColor(image_format))  // single plane color format
+        {
+            if (aspectMask != VK_IMAGE_ASPECT_COLOR_BIT) {
+                skip |= LogError(
+                    image, "VUID*****",
+                    "vkGetImageCompressionPropertiesEXT: format of image is %s which is a color format but aspectMask is %s",
+                    string_VkFormat(image_format), string_VkImageAspectFlags(aspectMask).c_str());
+            }
+        }
+        if (FormatPlaneCount(image_format) == 2) {
+            if ((aspectMask != VK_IMAGE_ASPECT_PLANE_0_BIT) && (aspectMask != VK_IMAGE_ASPECT_PLANE_1_BIT)) {
+                skip |= LogError(image, "VUID*****",
+                                 "vkGetImageCompressionPropertiesEXT: plane count of image format(%s) is 2 but aspectMask is %s",
+                                 string_VkFormat(image_format), string_VkImageAspectFlags(aspectMask).c_str());
+            }
+        }
+        if (FormatPlaneCount(image_format) == 3) {
+            if ((aspectMask != VK_IMAGE_ASPECT_PLANE_0_BIT) && (aspectMask != VK_IMAGE_ASPECT_PLANE_1_BIT) &&
+                (aspectMask != VK_IMAGE_ASPECT_PLANE_2_BIT))
+                skip |= LogError(image, "VUID*****",
+                                 "vkGetImageCompressionPropertiesEXT: plane count of image format(%s) is 3 but aspectMask is %s",
+                                 string_VkFormat(image_format), string_VkImageAspectFlags(aspectMask).c_str());
+        }
+
+        if ((aspectMask & VK_IMAGE_ASPECT_DEPTH_BIT) != 0) {
+            if (!FormatHasDepth(image_format)) {
+                skip |= LogError(image, "VUID*****",
+                                 "vkGetImageCompressionPropertiesEXT: format of image is %s which does not have depth component "
+                                 "but aspectMask is %s",
+                                 string_VkFormat(image_format), string_VkImageAspectFlags(aspectMask).c_str());
+            }
+        }
+
+        if ((aspectMask & VK_IMAGE_ASPECT_STENCIL_BIT) != 0) {
+            if (!FormatHasStencil(image_format)) {
+                skip |= LogError(image, "VUID*****",
+                                 "vkGetImageCompressionPropertiesEXT: format of image is %s which which does not have stencil "
+                                 "component but aspectMask is %s",
+                                 string_VkFormat(image_format), string_VkImageAspectFlags(aspectMask).c_str());
+            }
+        }
+
+        if ((image_state->IsExternalAHB()) && (0 == image_state->GetBoundMemory().size())) {
+            skip |=
+                LogError(image, "VUID*****",
+                         "vkGetImageCompressionPropertiesEXT: image type is android hardware buffer but bound memory is not valid");
+        }
+    }
+
+    return skip;
+}

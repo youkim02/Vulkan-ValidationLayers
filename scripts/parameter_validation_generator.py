@@ -266,6 +266,8 @@ class ParameterValidationOutputGenerator(OutputGenerator):
             'vkCmdSetDiscardRectangleEXT',
             'vkGetQueryPoolResults',
             'vkCmdBeginConditionalRenderingEXT',
+            'vkGetPhysicalDeviceSurfaceFormats2KHR',
+            'vkGetImageCompressionPropertiesEXT',
             ]
 
         # Commands to ignore

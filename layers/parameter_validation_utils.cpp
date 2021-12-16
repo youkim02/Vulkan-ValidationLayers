@@ -1221,6 +1221,24 @@ bool StatelessValidation::manual_PreCallValidateCreateImage(VkDevice device, con
                 }
             }
         }
+
+        const auto image_compression_control = LvlFindInChain<VkImageCompressionControlEXT>(pCreateInfo->pNext);
+        if (image_compression_control) {
+            constexpr VkImageCompressionFlagsEXT AllVkImageCompressionFlagBitsEXT =
+                (VK_IMAGE_COMPRESSION_DEFAULT_EXT | VK_IMAGE_COMPRESSION_FIXED_RATE_DEFAULT_EXT |
+                 VK_IMAGE_COMPRESSION_FIXED_RATE_EXPLICIT_EXT | VK_IMAGE_COMPRESSION_DISABLED_EXT);
+            skip |= validate_flags("vkCreateImage", "VkImageCompressionControlEXT::flags", "VkImageCompressionFlagsEXT",
+                                   AllVkImageCompressionFlagBitsEXT, image_compression_control->flags, kRequiredSingleBit,
+                                   "VUID-VkPipelineMultisampleStateCreateInfo-rasterizationSamples-parameter");
+
+            if (image_compression_control->flags == VK_IMAGE_COMPRESSION_FIXED_RATE_EXPLICIT_EXT &&
+                !image_compression_control->pFixedRateFlags) {
+                skip |= LogError(
+                    device, "VUID-VkImageCreateInfo-pNext-04737",
+                    "VkImageCompressionControlEXT::pFixedRateFlags is nullptr even VkImageCompressionControlEXT::flags is %s",
+                    string_VkImageCompressionFlagsEXT(image_compression_control->flags).c_str());
+            }
+        }
     }
 
     return skip;
@@ -8032,6 +8050,32 @@ bool StatelessValidation::manual_PreCallValidateCmdBeginConditionalRenderingEXT(
                          ") is not a multiple of 4.",
                          pConditionalRenderingBegin->offset);
     }
+
+    return skip;
+}
+
+bool StatelessValidation::manual_PreCallValidateGetPhysicalDeviceSurfaceFormats2KHR(
+    VkPhysicalDevice physicalDevice, const VkPhysicalDeviceSurfaceInfo2KHR *pSurfaceInfo, uint32_t *pSurfaceFormatCount,
+    VkSurfaceFormat2KHR *pSurfaceFormats) const {
+    bool skip = false;
+    if (LvlFindInChain<VkImageCompressionPropertiesEXT>(pSurfaceInfo->pNext)) {
+        if (!IsExtEnabled(device_extensions.vk_ext_image_compression_control_swapchain)) {
+            skip |= LogError(
+                physicalDevice, "VUID-***",
+                "Cannot query compression properties of %s() surface without VK_EXT_image_compression_control_swapchain extension",
+                "vkGetPhysicalDeviceSurfaceFormats2KHR");
+        }
+    }
+
+    return skip;
+}
+
+bool StatelessValidation::manual_PreCallValidateGetImageCompressionPropertiesEXT(
+    VkDevice device, VkImage image, VkImageAspectFlags aspectMask, VkImageCompressionPropertiesEXT *pProperties) const {
+    bool skip = false;
+
+    skip |= validate_flags("vkGetImageCompressionPropertiesEXT", "aspectMask", "VkImageAspectFlags", AllVkImageAspectFlagBits,
+                           aspectMask, kRequiredSingleBit, "VUID-******");
 
     return skip;
 }
