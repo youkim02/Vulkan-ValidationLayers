@@ -1608,7 +1608,8 @@ class CoreChecks : public ValidationStateTracker {
     void PostCallRecordGetQueryPoolResults(VkDevice device, VkQueryPool queryPool, uint32_t firstQuery, uint32_t queryCount,
                                            size_t dataSize, void* pData, VkDeviceSize stride, VkQueryResultFlags flags,
                                            VkResult result) override;
-
+    bool PreCallValidateGetImageCompressionPropertiesEXT(VkDevice device, VkImage image, VkImageAspectFlags aspectMask,
+                                                         VkImageCompressionPropertiesEXT* pProperties) const override;
 #ifdef VK_USE_PLATFORM_ANDROID_KHR
     bool PreCallValidateGetAndroidHardwareBufferPropertiesANDROID(
         VkDevice device, const struct AHardwareBuffer* buffer,

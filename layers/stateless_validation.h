@@ -59,6 +59,7 @@ extern const VkBuildAccelerationStructureFlagsNV AllVkBuildAccelerationStructure
 extern const VkGeometryFlagsKHR AllVkGeometryFlagBitsKHR;
 extern const VkPipelineColorBlendStateCreateFlags AllVkPipelineColorBlendStateCreateFlagBits;
 extern const VkPipelineDepthStencilStateCreateFlags AllVkPipelineDepthStencilStateCreateFlagBits;
+extern const VkImageAspectFlags AllVkImageAspectFlagBits;
 
 extern const std::vector<VkGeometryTypeKHR> AllVkGeometryTypeKHREnums;
 extern const std::vector<VkCompareOp> AllVkCompareOpEnums;
@@ -1791,5 +1792,12 @@ class StatelessValidation : public ValidationObject {
     bool manual_PreCallValidateCmdBeginConditionalRenderingEXT(
         VkCommandBuffer commandBuffer, const VkConditionalRenderingBeginInfoEXT *pConditionalRenderingBegin) const;
 
+    bool manual_PreCallValidateGetPhysicalDeviceSurfaceFormats2KHR(VkPhysicalDevice physicalDevice,
+                                                                   const VkPhysicalDeviceSurfaceInfo2KHR *pSurfaceInfo,
+                                                                   uint32_t *pSurfaceFormatCount,
+                                                                   VkSurfaceFormat2KHR *pSurfaceFormats) const;
+
+    bool manual_PreCallValidateGetImageCompressionPropertiesEXT(VkDevice device, VkImage image, VkImageAspectFlags aspectMask,
+                                                                VkImageCompressionPropertiesEXT *pProperties) const;
 #include "parameter_validation.h"
 };  // Class StatelessValidation
