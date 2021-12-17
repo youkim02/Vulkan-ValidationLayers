@@ -43,6 +43,8 @@ static inline const char* string_VkResult(VkResult input_value)
 {
     switch (input_value)
     {
+        case VK_ERROR_COMPRESSION_EXHAUSTED_EXT:
+            return "VK_ERROR_COMPRESSION_EXHAUSTED_EXT";
         case VK_ERROR_DEVICE_LOST:
             return "VK_ERROR_DEVICE_LOST";
         case VK_ERROR_EXTENSION_NOT_PRESENT:
@@ -482,6 +484,10 @@ static inline const char* string_VkStructureType(VkStructureType input_value)
             return "VK_STRUCTURE_TYPE_IMAGEPIPE_SURFACE_CREATE_INFO_FUCHSIA";
         case VK_STRUCTURE_TYPE_IMAGE_BLIT_2_KHR:
             return "VK_STRUCTURE_TYPE_IMAGE_BLIT_2_KHR";
+        case VK_STRUCTURE_TYPE_IMAGE_COMPRESSION_CONTROL_EXT:
+            return "VK_STRUCTURE_TYPE_IMAGE_COMPRESSION_CONTROL_EXT";
+        case VK_STRUCTURE_TYPE_IMAGE_COMPRESSION_PROPERTIES_EXT:
+            return "VK_STRUCTURE_TYPE_IMAGE_COMPRESSION_PROPERTIES_EXT";
         case VK_STRUCTURE_TYPE_IMAGE_CONSTRAINTS_INFO_FUCHSIA:
             return "VK_STRUCTURE_TYPE_IMAGE_CONSTRAINTS_INFO_FUCHSIA";
         case VK_STRUCTURE_TYPE_IMAGE_COPY_2_KHR:
@@ -754,6 +760,10 @@ static inline const char* string_VkStructureType(VkStructureType input_value)
             return "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ID_PROPERTIES";
         case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGELESS_FRAMEBUFFER_FEATURES:
             return "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGELESS_FRAMEBUFFER_FEATURES";
+        case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_FEATURES_EXT:
+            return "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_FEATURES_EXT";
+        case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_FEATURES_EXT:
+            return "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_FEATURES_EXT";
         case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_DRM_FORMAT_MODIFIER_INFO_EXT:
             return "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_DRM_FORMAT_MODIFIER_INFO_EXT";
         case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2:
@@ -8818,6 +8828,90 @@ static inline const char* string_VkAccelerationStructureMotionInstanceTypeNV(VkA
         default:
             return "Unhandled VkAccelerationStructureMotionInstanceTypeNV";
     }
+}
+
+static inline const char* string_VkImageCompressionFlagBitsEXT(VkImageCompressionFlagBitsEXT input_value)
+{
+    switch (input_value)
+    {
+        case VK_IMAGE_COMPRESSION_DEFAULT_EXT:
+            return "VK_IMAGE_COMPRESSION_DEFAULT_EXT";
+        case VK_IMAGE_COMPRESSION_DISABLED_EXT:
+            return "VK_IMAGE_COMPRESSION_DISABLED_EXT";
+        case VK_IMAGE_COMPRESSION_FIXED_RATE_DEFAULT_EXT:
+            return "VK_IMAGE_COMPRESSION_FIXED_RATE_DEFAULT_EXT";
+        case VK_IMAGE_COMPRESSION_FIXED_RATE_EXPLICIT_EXT:
+            return "VK_IMAGE_COMPRESSION_FIXED_RATE_EXPLICIT_EXT";
+        default:
+            return "Unhandled VkImageCompressionFlagBitsEXT";
+    }
+}
+
+static inline std::string string_VkImageCompressionFlagsEXT(VkImageCompressionFlagsEXT input_value)
+{
+    std::string ret;
+    int index = 0;
+    while(input_value) {
+        if (input_value & 1) {
+            if( !ret.empty()) ret.append("|");
+            ret.append(string_VkImageCompressionFlagBitsEXT(static_cast<VkImageCompressionFlagBitsEXT>(1U << index)));
+        }
+        ++index;
+        input_value >>= 1;
+    }
+    if( ret.empty()) ret.append(string_VkImageCompressionFlagBitsEXT(static_cast<VkImageCompressionFlagBitsEXT>(0)));
+    return ret;
+}
+
+static inline const char* string_VkImageCompressionFixedRateFlagBitsEXT(VkImageCompressionFixedRateFlagBitsEXT input_value)
+{
+    switch (input_value)
+    {
+        case VK_IMAGE_COMPRESSION_FIXED_RATE_10BPC_BIT_EXT:
+            return "VK_IMAGE_COMPRESSION_FIXED_RATE_10BPC_BIT_EXT";
+        case VK_IMAGE_COMPRESSION_FIXED_RATE_11BPC_BIT_EXT:
+            return "VK_IMAGE_COMPRESSION_FIXED_RATE_11BPC_BIT_EXT";
+        case VK_IMAGE_COMPRESSION_FIXED_RATE_12BPC_BIT_EXT:
+            return "VK_IMAGE_COMPRESSION_FIXED_RATE_12BPC_BIT_EXT";
+        case VK_IMAGE_COMPRESSION_FIXED_RATE_1BPC_BIT_EXT:
+            return "VK_IMAGE_COMPRESSION_FIXED_RATE_1BPC_BIT_EXT";
+        case VK_IMAGE_COMPRESSION_FIXED_RATE_2BPC_BIT_EXT:
+            return "VK_IMAGE_COMPRESSION_FIXED_RATE_2BPC_BIT_EXT";
+        case VK_IMAGE_COMPRESSION_FIXED_RATE_3BPC_BIT_EXT:
+            return "VK_IMAGE_COMPRESSION_FIXED_RATE_3BPC_BIT_EXT";
+        case VK_IMAGE_COMPRESSION_FIXED_RATE_4BPC_BIT_EXT:
+            return "VK_IMAGE_COMPRESSION_FIXED_RATE_4BPC_BIT_EXT";
+        case VK_IMAGE_COMPRESSION_FIXED_RATE_5BPC_BIT_EXT:
+            return "VK_IMAGE_COMPRESSION_FIXED_RATE_5BPC_BIT_EXT";
+        case VK_IMAGE_COMPRESSION_FIXED_RATE_6BPC_BIT_EXT:
+            return "VK_IMAGE_COMPRESSION_FIXED_RATE_6BPC_BIT_EXT";
+        case VK_IMAGE_COMPRESSION_FIXED_RATE_7BPC_BIT_EXT:
+            return "VK_IMAGE_COMPRESSION_FIXED_RATE_7BPC_BIT_EXT";
+        case VK_IMAGE_COMPRESSION_FIXED_RATE_8BPC_BIT_EXT:
+            return "VK_IMAGE_COMPRESSION_FIXED_RATE_8BPC_BIT_EXT";
+        case VK_IMAGE_COMPRESSION_FIXED_RATE_9BPC_BIT_EXT:
+            return "VK_IMAGE_COMPRESSION_FIXED_RATE_9BPC_BIT_EXT";
+        case VK_IMAGE_COMPRESSION_FIXED_RATE_NONE_EXT:
+            return "VK_IMAGE_COMPRESSION_FIXED_RATE_NONE_EXT";
+        default:
+            return "Unhandled VkImageCompressionFixedRateFlagBitsEXT";
+    }
+}
+
+static inline std::string string_VkImageCompressionFixedRateFlagsEXT(VkImageCompressionFixedRateFlagsEXT input_value)
+{
+    std::string ret;
+    int index = 0;
+    while(input_value) {
+        if (input_value & 1) {
+            if( !ret.empty()) ret.append("|");
+            ret.append(string_VkImageCompressionFixedRateFlagBitsEXT(static_cast<VkImageCompressionFixedRateFlagBitsEXT>(1U << index)));
+        }
+        ++index;
+        input_value >>= 1;
+    }
+    if( ret.empty()) ret.append(string_VkImageCompressionFixedRateFlagBitsEXT(static_cast<VkImageCompressionFixedRateFlagBitsEXT>(0)));
+    return ret;
 }
 
 

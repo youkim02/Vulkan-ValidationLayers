@@ -5192,6 +5192,33 @@ template <> struct LvlSTypeMap<VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_ROBUSTNES
     typedef VkPhysicalDeviceImageRobustnessFeaturesEXT Type;
 };
 
+// Map type VkPhysicalDeviceImageCompressionControlFeaturesEXT to id VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_FEATURES_EXT
+template <> struct LvlTypeMap<VkPhysicalDeviceImageCompressionControlFeaturesEXT> {
+    static const VkStructureType kSType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_FEATURES_EXT;
+};
+
+template <> struct LvlSTypeMap<VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_FEATURES_EXT> {
+    typedef VkPhysicalDeviceImageCompressionControlFeaturesEXT Type;
+};
+
+// Map type VkImageCompressionControlEXT to id VK_STRUCTURE_TYPE_IMAGE_COMPRESSION_CONTROL_EXT
+template <> struct LvlTypeMap<VkImageCompressionControlEXT> {
+    static const VkStructureType kSType = VK_STRUCTURE_TYPE_IMAGE_COMPRESSION_CONTROL_EXT;
+};
+
+template <> struct LvlSTypeMap<VK_STRUCTURE_TYPE_IMAGE_COMPRESSION_CONTROL_EXT> {
+    typedef VkImageCompressionControlEXT Type;
+};
+
+// Map type VkImageCompressionPropertiesEXT to id VK_STRUCTURE_TYPE_IMAGE_COMPRESSION_PROPERTIES_EXT
+template <> struct LvlTypeMap<VkImageCompressionPropertiesEXT> {
+    static const VkStructureType kSType = VK_STRUCTURE_TYPE_IMAGE_COMPRESSION_PROPERTIES_EXT;
+};
+
+template <> struct LvlSTypeMap<VK_STRUCTURE_TYPE_IMAGE_COMPRESSION_PROPERTIES_EXT> {
+    typedef VkImageCompressionPropertiesEXT Type;
+};
+
 // Map type VkPhysicalDevice4444FormatsFeaturesEXT to id VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT
 template <> struct LvlTypeMap<VkPhysicalDevice4444FormatsFeaturesEXT> {
     static const VkStructureType kSType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT;
@@ -5647,6 +5674,15 @@ template <> struct LvlTypeMap<VkPhysicalDevicePageableDeviceLocalMemoryFeaturesE
 
 template <> struct LvlSTypeMap<VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PAGEABLE_DEVICE_LOCAL_MEMORY_FEATURES_EXT> {
     typedef VkPhysicalDevicePageableDeviceLocalMemoryFeaturesEXT Type;
+};
+
+// Map type VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT to id VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_FEATURES_EXT
+template <> struct LvlTypeMap<VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT> {
+    static const VkStructureType kSType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_FEATURES_EXT;
+};
+
+template <> struct LvlSTypeMap<VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_FEATURES_EXT> {
+    typedef VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT Type;
 };
 
 // Map type VkAccelerationStructureGeometryTrianglesDataKHR to id VK_STRUCTURE_TYPE_ACCELERATION_STRUCTURE_GEOMETRY_TRIANGLES_DATA_KHR

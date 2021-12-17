@@ -2883,6 +2883,13 @@ VKAPI_ATTR void VKAPI_CALL CmdSetFragmentShadingRateEnumNV(
 
 
 
+VKAPI_ATTR void VKAPI_CALL GetImageCompressionPropertiesEXT(
+    VkDevice                                    device,
+    VkImage                                     image,
+    VkImageAspectFlags                          aspectMask,
+    VkImageCompressionPropertiesEXT*            pProperties);
+
+
 
 
 #ifdef VK_USE_PLATFORM_WIN32_KHR
@@ -3067,6 +3074,7 @@ VKAPI_ATTR void VKAPI_CALL SetDeviceMemoryPriorityEXT(
     VkDevice                                    device,
     VkDeviceMemory                              memory,
     float                                       priority);
+
 
 
 VKAPI_ATTR VkResult VKAPI_CALL CreateAccelerationStructureKHR(
@@ -5021,6 +5029,9 @@ class ValidationObject {
         virtual bool PreCallValidateCmdSetFragmentShadingRateEnumNV(VkCommandBuffer           commandBuffer, VkFragmentShadingRateNV                     shadingRate, const VkFragmentShadingRateCombinerOpKHR    combinerOps[2]) const { return false; };
         virtual void PreCallRecordCmdSetFragmentShadingRateEnumNV(VkCommandBuffer           commandBuffer, VkFragmentShadingRateNV                     shadingRate, const VkFragmentShadingRateCombinerOpKHR    combinerOps[2]) {};
         virtual void PostCallRecordCmdSetFragmentShadingRateEnumNV(VkCommandBuffer           commandBuffer, VkFragmentShadingRateNV                     shadingRate, const VkFragmentShadingRateCombinerOpKHR    combinerOps[2]) {};
+        virtual bool PreCallValidateGetImageCompressionPropertiesEXT(VkDevice device, VkImage image, VkImageAspectFlags aspectMask, VkImageCompressionPropertiesEXT* pProperties) const { return false; };
+        virtual void PreCallRecordGetImageCompressionPropertiesEXT(VkDevice device, VkImage image, VkImageAspectFlags aspectMask, VkImageCompressionPropertiesEXT* pProperties) {};
+        virtual void PostCallRecordGetImageCompressionPropertiesEXT(VkDevice device, VkImage image, VkImageAspectFlags aspectMask, VkImageCompressionPropertiesEXT* pProperties) {};
 #ifdef VK_USE_PLATFORM_WIN32_KHR
         virtual bool PreCallValidateAcquireWinrtDisplayNV(VkPhysicalDevice physicalDevice, VkDisplayKHR display) const { return false; };
         virtual void PreCallRecordAcquireWinrtDisplayNV(VkPhysicalDevice physicalDevice, VkDisplayKHR display) {};

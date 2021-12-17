@@ -397,6 +397,8 @@ struct DeviceExtensions : public InstanceExtensions {
     ExtEnabled vk_ext_global_priority_query{kNotEnabled};
     ExtEnabled vk_ext_hdr_metadata{kNotEnabled};
     ExtEnabled vk_ext_host_query_reset{kNotEnabled};
+    ExtEnabled vk_ext_image_compression_control{kNotEnabled};
+    ExtEnabled vk_ext_image_compression_control_swapchain{kNotEnabled};
     ExtEnabled vk_ext_image_drm_format_modifier{kNotEnabled};
     ExtEnabled vk_ext_image_robustness{kNotEnabled};
     ExtEnabled vk_ext_image_view_min_lod{kNotEnabled};
@@ -693,6 +695,9 @@ struct DeviceExtensions : public InstanceExtensions {
                            {&DeviceExtensions::vk_khr_swapchain, VK_KHR_SWAPCHAIN_EXTENSION_NAME}}})},
             {VK_EXT_HOST_QUERY_RESET_EXTENSION_NAME, DeviceInfo(&DeviceExtensions::vk_ext_host_query_reset, {{
                            {&DeviceExtensions::vk_khr_get_physical_device_properties2, VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME}}})},
+            {VK_EXT_IMAGE_COMPRESSION_CONTROL_EXTENSION_NAME, DeviceInfo(&DeviceExtensions::vk_ext_image_compression_control, {})},
+            {VK_EXT_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_EXTENSION_NAME, DeviceInfo(&DeviceExtensions::vk_ext_image_compression_control_swapchain, {{
+                           {&DeviceExtensions::vk_ext_image_compression_control, VK_EXT_IMAGE_COMPRESSION_CONTROL_EXTENSION_NAME}}})},
             {VK_EXT_IMAGE_DRM_FORMAT_MODIFIER_EXTENSION_NAME, DeviceInfo(&DeviceExtensions::vk_ext_image_drm_format_modifier, {{
                            {&DeviceExtensions::vk_khr_bind_memory2, VK_KHR_BIND_MEMORY_2_EXTENSION_NAME},
                            {&DeviceExtensions::vk_khr_get_physical_device_properties2, VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_EXTENSION_NAME},
@@ -1241,6 +1246,8 @@ static const std::set<std::string> kDeviceExtensionNames = {
     VK_EXT_GLOBAL_PRIORITY_QUERY_EXTENSION_NAME,
     VK_EXT_HDR_METADATA_EXTENSION_NAME,
     VK_EXT_HOST_QUERY_RESET_EXTENSION_NAME,
+    VK_EXT_IMAGE_COMPRESSION_CONTROL_EXTENSION_NAME,
+    VK_EXT_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_EXTENSION_NAME,
     VK_EXT_IMAGE_DRM_FORMAT_MODIFIER_EXTENSION_NAME,
     VK_EXT_IMAGE_ROBUSTNESS_EXTENSION_NAME,
     VK_EXT_IMAGE_VIEW_MIN_LOD_EXTENSION_NAME,

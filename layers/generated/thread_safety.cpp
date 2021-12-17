@@ -7739,6 +7739,24 @@ void ThreadSafety::PostCallRecordCmdSetFragmentShadingRateEnumNV(
     // Host access to commandBuffer must be externally synchronized
 }
 
+void ThreadSafety::PreCallRecordGetImageCompressionPropertiesEXT(
+    VkDevice                                    device,
+    VkImage                                     image,
+    VkImageAspectFlags                          aspectMask,
+    VkImageCompressionPropertiesEXT*            pProperties) {
+    StartReadObjectParentInstance(device, "vkGetImageCompressionPropertiesEXT");
+    StartReadObject(image, "vkGetImageCompressionPropertiesEXT");
+}
+
+void ThreadSafety::PostCallRecordGetImageCompressionPropertiesEXT(
+    VkDevice                                    device,
+    VkImage                                     image,
+    VkImageAspectFlags                          aspectMask,
+    VkImageCompressionPropertiesEXT*            pProperties) {
+    FinishReadObjectParentInstance(device, "vkGetImageCompressionPropertiesEXT");
+    FinishReadObject(image, "vkGetImageCompressionPropertiesEXT");
+}
+
 #ifdef VK_USE_PLATFORM_WIN32_KHR
 
 void ThreadSafety::PreCallRecordAcquireWinrtDisplayNV(

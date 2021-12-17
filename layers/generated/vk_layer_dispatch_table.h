@@ -826,6 +826,9 @@ typedef struct VkLayerDispatchTable_ {
     // ---- VK_NV_fragment_shading_rate_enums extension commands
     PFN_vkCmdSetFragmentShadingRateEnumNV CmdSetFragmentShadingRateEnumNV;
 
+    // ---- VK_EXT_image_compression_control extension commands
+    PFN_vkGetImageCompressionPropertiesEXT GetImageCompressionPropertiesEXT;
+
     // ---- VK_EXT_vertex_input_dynamic_state extension commands
     PFN_vkCmdSetVertexInputEXT CmdSetVertexInputEXT;
 

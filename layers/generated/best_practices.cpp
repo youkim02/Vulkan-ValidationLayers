@@ -463,7 +463,7 @@ void BestPractices::PostCallRecordCreateImage(
     VkResult                                    result) {
     ValidationStateTracker::PostCallRecordCreateImage(device, pCreateInfo, pAllocator, pImage, result);
     if (result != VK_SUCCESS) {
-        static const std::vector<VkResult> error_codes = {VK_ERROR_OUT_OF_HOST_MEMORY,VK_ERROR_OUT_OF_DEVICE_MEMORY};
+        static const std::vector<VkResult> error_codes = {VK_ERROR_OUT_OF_HOST_MEMORY,VK_ERROR_OUT_OF_DEVICE_MEMORY,VK_ERROR_COMPRESSION_EXHAUSTED_EXT};
         static const std::vector<VkResult> success_codes = {};
         ValidateReturnCodes("vkCreateImage", result, error_codes, success_codes);
     }

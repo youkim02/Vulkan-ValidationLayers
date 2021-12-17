@@ -10108,6 +10108,54 @@ struct safe_VkPhysicalDeviceImageRobustnessFeaturesEXT {
     VkPhysicalDeviceImageRobustnessFeaturesEXT const *ptr() const { return reinterpret_cast<VkPhysicalDeviceImageRobustnessFeaturesEXT const *>(this); }
 };
 
+struct safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT {
+    VkStructureType sType;
+    void* pNext;
+    VkBool32 imageCompressionControl;
+    safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT(const VkPhysicalDeviceImageCompressionControlFeaturesEXT* in_struct);
+    safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT(const safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT& copy_src);
+    safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT& operator=(const safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT& copy_src);
+    safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT();
+    ~safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT();
+    void initialize(const VkPhysicalDeviceImageCompressionControlFeaturesEXT* in_struct);
+    void initialize(const safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT* copy_src);
+    VkPhysicalDeviceImageCompressionControlFeaturesEXT *ptr() { return reinterpret_cast<VkPhysicalDeviceImageCompressionControlFeaturesEXT *>(this); }
+    VkPhysicalDeviceImageCompressionControlFeaturesEXT const *ptr() const { return reinterpret_cast<VkPhysicalDeviceImageCompressionControlFeaturesEXT const *>(this); }
+};
+
+struct safe_VkImageCompressionControlEXT {
+    VkStructureType sType;
+    const void* pNext;
+    VkImageCompressionFlagsEXT flags;
+    uint32_t compressionControlPlaneCount;
+    VkImageCompressionFixedRateFlagsEXT* pFixedRateFlags;
+    safe_VkImageCompressionControlEXT(const VkImageCompressionControlEXT* in_struct);
+    safe_VkImageCompressionControlEXT(const safe_VkImageCompressionControlEXT& copy_src);
+    safe_VkImageCompressionControlEXT& operator=(const safe_VkImageCompressionControlEXT& copy_src);
+    safe_VkImageCompressionControlEXT();
+    ~safe_VkImageCompressionControlEXT();
+    void initialize(const VkImageCompressionControlEXT* in_struct);
+    void initialize(const safe_VkImageCompressionControlEXT* copy_src);
+    VkImageCompressionControlEXT *ptr() { return reinterpret_cast<VkImageCompressionControlEXT *>(this); }
+    VkImageCompressionControlEXT const *ptr() const { return reinterpret_cast<VkImageCompressionControlEXT const *>(this); }
+};
+
+struct safe_VkImageCompressionPropertiesEXT {
+    VkStructureType sType;
+    void* pNext;
+    VkImageCompressionFlagsEXT imageCompressionFlags;
+    VkImageCompressionFixedRateFlagsEXT imageCompressionFixedRateFlags;
+    safe_VkImageCompressionPropertiesEXT(const VkImageCompressionPropertiesEXT* in_struct);
+    safe_VkImageCompressionPropertiesEXT(const safe_VkImageCompressionPropertiesEXT& copy_src);
+    safe_VkImageCompressionPropertiesEXT& operator=(const safe_VkImageCompressionPropertiesEXT& copy_src);
+    safe_VkImageCompressionPropertiesEXT();
+    ~safe_VkImageCompressionPropertiesEXT();
+    void initialize(const VkImageCompressionPropertiesEXT* in_struct);
+    void initialize(const safe_VkImageCompressionPropertiesEXT* copy_src);
+    VkImageCompressionPropertiesEXT *ptr() { return reinterpret_cast<VkImageCompressionPropertiesEXT *>(this); }
+    VkImageCompressionPropertiesEXT const *ptr() const { return reinterpret_cast<VkImageCompressionPropertiesEXT const *>(this); }
+};
+
 struct safe_VkPhysicalDevice4444FormatsFeaturesEXT {
     VkStructureType sType;
     void* pNext;
@@ -10920,6 +10968,21 @@ struct safe_VkPhysicalDevicePageableDeviceLocalMemoryFeaturesEXT {
     void initialize(const safe_VkPhysicalDevicePageableDeviceLocalMemoryFeaturesEXT* copy_src);
     VkPhysicalDevicePageableDeviceLocalMemoryFeaturesEXT *ptr() { return reinterpret_cast<VkPhysicalDevicePageableDeviceLocalMemoryFeaturesEXT *>(this); }
     VkPhysicalDevicePageableDeviceLocalMemoryFeaturesEXT const *ptr() const { return reinterpret_cast<VkPhysicalDevicePageableDeviceLocalMemoryFeaturesEXT const *>(this); }
+};
+
+struct safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT {
+    VkStructureType sType;
+    void* pNext;
+    VkBool32 imageCompressionControlSwapchain;
+    safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT(const VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT* in_struct);
+    safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT(const safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT& copy_src);
+    safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT& operator=(const safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT& copy_src);
+    safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT();
+    ~safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT();
+    void initialize(const VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT* in_struct);
+    void initialize(const safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT* copy_src);
+    VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT *ptr() { return reinterpret_cast<VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT *>(this); }
+    VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT const *ptr() const { return reinterpret_cast<VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT const *>(this); }
 };
 
 union safe_VkDeviceOrHostAddressKHR {

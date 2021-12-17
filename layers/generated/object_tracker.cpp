@@ -6403,6 +6403,18 @@ bool ObjectLifetimes::PreCallValidateCmdSetFragmentShadingRateEnumNV(
     return skip;
 }
 
+bool ObjectLifetimes::PreCallValidateGetImageCompressionPropertiesEXT(
+    VkDevice                                    device,
+    VkImage                                     image,
+    VkImageAspectFlags                          aspectMask,
+    VkImageCompressionPropertiesEXT*            pProperties) const {
+    bool skip = false;
+    skip |= ValidateObject(device, kVulkanObjectTypeDevice, false, kVUIDUndefined, kVUIDUndefined);
+    skip |= ValidateObject(image, kVulkanObjectTypeImage, false, kVUIDUndefined, kVUIDUndefined);
+
+    return skip;
+}
+
 #ifdef VK_USE_PLATFORM_WIN32_KHR
 
 bool ObjectLifetimes::PreCallValidateAcquireWinrtDisplayNV(

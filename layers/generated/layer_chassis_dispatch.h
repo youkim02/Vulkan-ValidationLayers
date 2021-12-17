@@ -2171,6 +2171,11 @@ void DispatchCmdSetFragmentShadingRateEnumNV(
     VkCommandBuffer                             commandBuffer,
     VkFragmentShadingRateNV                     shadingRate,
     const VkFragmentShadingRateCombinerOpKHR    combinerOps[2]);
+void DispatchGetImageCompressionPropertiesEXT(
+    VkDevice                                    device,
+    VkImage                                     image,
+    VkImageAspectFlags                          aspectMask,
+    VkImageCompressionPropertiesEXT*            pProperties);
 #ifdef VK_USE_PLATFORM_WIN32_KHR
 VkResult DispatchAcquireWinrtDisplayNV(
     VkPhysicalDevice                            physicalDevice,

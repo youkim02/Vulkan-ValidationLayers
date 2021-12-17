@@ -436,6 +436,7 @@ static VKAPI_ATTR void VKAPI_CALL StubDestroyPrivateDataSlotEXT(VkDevice device,
 static VKAPI_ATTR VkResult VKAPI_CALL StubSetPrivateDataEXT(VkDevice device, VkObjectType objectType, uint64_t objectHandle, VkPrivateDataSlotEXT privateDataSlot, uint64_t data) { return VK_SUCCESS; };
 static VKAPI_ATTR void VKAPI_CALL StubGetPrivateDataEXT(VkDevice device, VkObjectType objectType, uint64_t objectHandle, VkPrivateDataSlotEXT privateDataSlot, uint64_t* pData) {  };
 static VKAPI_ATTR void VKAPI_CALL StubCmdSetFragmentShadingRateEnumNV(VkCommandBuffer           commandBuffer, VkFragmentShadingRateNV                     shadingRate, const VkFragmentShadingRateCombinerOpKHR    combinerOps[2]) {  };
+static VKAPI_ATTR void VKAPI_CALL StubGetImageCompressionPropertiesEXT(VkDevice device, VkImage image, VkImageAspectFlags aspectMask, VkImageCompressionPropertiesEXT* pProperties) {  };
 #ifdef VK_USE_PLATFORM_WIN32_KHR
 static VKAPI_ATTR VkResult VKAPI_CALL StubAcquireWinrtDisplayNV(VkPhysicalDevice physicalDevice, VkDisplayKHR display) { return VK_SUCCESS; };
 #endif // VK_USE_PLATFORM_WIN32_KHR
@@ -721,6 +722,7 @@ const layer_data::unordered_map<std::string, std::string> api_extension_map {
     {"vkGetFenceFdKHR", "VK_KHR_external_fence_fd"},
     {"vkGetFenceWin32HandleKHR", "VK_KHR_external_fence_win32"},
     {"vkGetGeneratedCommandsMemoryRequirementsNV", "VK_NV_device_generated_commands"},
+    {"vkGetImageCompressionPropertiesEXT", "VK_EXT_image_compression_control"},
     {"vkGetImageDrmFormatModifierPropertiesEXT", "VK_EXT_image_drm_format_modifier"},
     {"vkGetImageMemoryRequirements2", "VK_VERSION_1_1"},
     {"vkGetImageMemoryRequirements2KHR", "VK_KHR_get_memory_requirements2"},
@@ -1467,6 +1469,8 @@ static inline void layer_init_device_dispatch_table(VkDevice device, VkLayerDisp
     if (table->GetPrivateDataEXT == nullptr) { table->GetPrivateDataEXT = (PFN_vkGetPrivateDataEXT)StubGetPrivateDataEXT; }
     table->CmdSetFragmentShadingRateEnumNV = (PFN_vkCmdSetFragmentShadingRateEnumNV) gpa(device, "vkCmdSetFragmentShadingRateEnumNV");
     if (table->CmdSetFragmentShadingRateEnumNV == nullptr) { table->CmdSetFragmentShadingRateEnumNV = (PFN_vkCmdSetFragmentShadingRateEnumNV)StubCmdSetFragmentShadingRateEnumNV; }
+    table->GetImageCompressionPropertiesEXT = (PFN_vkGetImageCompressionPropertiesEXT) gpa(device, "vkGetImageCompressionPropertiesEXT");
+    if (table->GetImageCompressionPropertiesEXT == nullptr) { table->GetImageCompressionPropertiesEXT = (PFN_vkGetImageCompressionPropertiesEXT)StubGetImageCompressionPropertiesEXT; }
     table->CmdSetVertexInputEXT = (PFN_vkCmdSetVertexInputEXT) gpa(device, "vkCmdSetVertexInputEXT");
     if (table->CmdSetVertexInputEXT == nullptr) { table->CmdSetVertexInputEXT = (PFN_vkCmdSetVertexInputEXT)StubCmdSetVertexInputEXT; }
 #ifdef VK_USE_PLATFORM_FUCHSIA

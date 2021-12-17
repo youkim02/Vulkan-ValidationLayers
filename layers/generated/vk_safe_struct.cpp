@@ -43901,6 +43901,205 @@ void safe_VkPhysicalDeviceImageRobustnessFeaturesEXT::initialize(const safe_VkPh
     pNext = SafePnextCopy(copy_src->pNext);
 }
 
+safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT::safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT(const VkPhysicalDeviceImageCompressionControlFeaturesEXT* in_struct) :
+    sType(in_struct->sType),
+    imageCompressionControl(in_struct->imageCompressionControl)
+{
+    pNext = SafePnextCopy(in_struct->pNext);
+}
+
+safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT::safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT() :
+    sType(VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_FEATURES_EXT),
+    pNext(nullptr)
+{}
+
+safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT::safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT(const safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT& copy_src)
+{
+    sType = copy_src.sType;
+    imageCompressionControl = copy_src.imageCompressionControl;
+    pNext = SafePnextCopy(copy_src.pNext);
+}
+
+safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT& safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT::operator=(const safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT& copy_src)
+{
+    if (&copy_src == this) return *this;
+
+    if (pNext)
+        FreePnextChain(pNext);
+
+    sType = copy_src.sType;
+    imageCompressionControl = copy_src.imageCompressionControl;
+    pNext = SafePnextCopy(copy_src.pNext);
+
+    return *this;
+}
+
+safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT::~safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT()
+{
+    if (pNext)
+        FreePnextChain(pNext);
+}
+
+void safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT::initialize(const VkPhysicalDeviceImageCompressionControlFeaturesEXT* in_struct)
+{
+    sType = in_struct->sType;
+    imageCompressionControl = in_struct->imageCompressionControl;
+    pNext = SafePnextCopy(in_struct->pNext);
+}
+
+void safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT::initialize(const safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT* copy_src)
+{
+    sType = copy_src->sType;
+    imageCompressionControl = copy_src->imageCompressionControl;
+    pNext = SafePnextCopy(copy_src->pNext);
+}
+
+safe_VkImageCompressionControlEXT::safe_VkImageCompressionControlEXT(const VkImageCompressionControlEXT* in_struct) :
+    sType(in_struct->sType),
+    flags(in_struct->flags),
+    compressionControlPlaneCount(in_struct->compressionControlPlaneCount),
+    pFixedRateFlags(nullptr)
+{
+    pNext = SafePnextCopy(in_struct->pNext);
+    if (in_struct->pFixedRateFlags) {
+        pFixedRateFlags = new VkImageCompressionFixedRateFlagsEXT[in_struct->compressionControlPlaneCount];
+        memcpy ((void *)pFixedRateFlags, (void *)in_struct->pFixedRateFlags, sizeof(VkImageCompressionFixedRateFlagsEXT)*in_struct->compressionControlPlaneCount);
+    }
+}
+
+safe_VkImageCompressionControlEXT::safe_VkImageCompressionControlEXT() :
+    sType(VK_STRUCTURE_TYPE_IMAGE_COMPRESSION_CONTROL_EXT),
+    pNext(nullptr),
+    pFixedRateFlags(nullptr)
+{}
+
+safe_VkImageCompressionControlEXT::safe_VkImageCompressionControlEXT(const safe_VkImageCompressionControlEXT& copy_src)
+{
+    sType = copy_src.sType;
+    flags = copy_src.flags;
+    compressionControlPlaneCount = copy_src.compressionControlPlaneCount;
+    pFixedRateFlags = nullptr;
+    pNext = SafePnextCopy(copy_src.pNext);
+    if (copy_src.pFixedRateFlags) {
+        pFixedRateFlags = new VkImageCompressionFixedRateFlagsEXT[copy_src.compressionControlPlaneCount];
+        memcpy ((void *)pFixedRateFlags, (void *)copy_src.pFixedRateFlags, sizeof(VkImageCompressionFixedRateFlagsEXT)*copy_src.compressionControlPlaneCount);
+    }
+}
+
+safe_VkImageCompressionControlEXT& safe_VkImageCompressionControlEXT::operator=(const safe_VkImageCompressionControlEXT& copy_src)
+{
+    if (&copy_src == this) return *this;
+
+    if (pFixedRateFlags)
+        delete[] pFixedRateFlags;
+    if (pNext)
+        FreePnextChain(pNext);
+
+    sType = copy_src.sType;
+    flags = copy_src.flags;
+    compressionControlPlaneCount = copy_src.compressionControlPlaneCount;
+    pFixedRateFlags = nullptr;
+    pNext = SafePnextCopy(copy_src.pNext);
+    if (copy_src.pFixedRateFlags) {
+        pFixedRateFlags = new VkImageCompressionFixedRateFlagsEXT[copy_src.compressionControlPlaneCount];
+        memcpy ((void *)pFixedRateFlags, (void *)copy_src.pFixedRateFlags, sizeof(VkImageCompressionFixedRateFlagsEXT)*copy_src.compressionControlPlaneCount);
+    }
+
+    return *this;
+}
+
+safe_VkImageCompressionControlEXT::~safe_VkImageCompressionControlEXT()
+{
+    if (pFixedRateFlags)
+        delete[] pFixedRateFlags;
+    if (pNext)
+        FreePnextChain(pNext);
+}
+
+void safe_VkImageCompressionControlEXT::initialize(const VkImageCompressionControlEXT* in_struct)
+{
+    sType = in_struct->sType;
+    flags = in_struct->flags;
+    compressionControlPlaneCount = in_struct->compressionControlPlaneCount;
+    pFixedRateFlags = nullptr;
+    pNext = SafePnextCopy(in_struct->pNext);
+    if (in_struct->pFixedRateFlags) {
+        pFixedRateFlags = new VkImageCompressionFixedRateFlagsEXT[in_struct->compressionControlPlaneCount];
+        memcpy ((void *)pFixedRateFlags, (void *)in_struct->pFixedRateFlags, sizeof(VkImageCompressionFixedRateFlagsEXT)*in_struct->compressionControlPlaneCount);
+    }
+}
+
+void safe_VkImageCompressionControlEXT::initialize(const safe_VkImageCompressionControlEXT* copy_src)
+{
+    sType = copy_src->sType;
+    flags = copy_src->flags;
+    compressionControlPlaneCount = copy_src->compressionControlPlaneCount;
+    pFixedRateFlags = nullptr;
+    pNext = SafePnextCopy(copy_src->pNext);
+    if (copy_src->pFixedRateFlags) {
+        pFixedRateFlags = new VkImageCompressionFixedRateFlagsEXT[copy_src->compressionControlPlaneCount];
+        memcpy ((void *)pFixedRateFlags, (void *)copy_src->pFixedRateFlags, sizeof(VkImageCompressionFixedRateFlagsEXT)*copy_src->compressionControlPlaneCount);
+    }
+}
+
+safe_VkImageCompressionPropertiesEXT::safe_VkImageCompressionPropertiesEXT(const VkImageCompressionPropertiesEXT* in_struct) :
+    sType(in_struct->sType),
+    imageCompressionFlags(in_struct->imageCompressionFlags),
+    imageCompressionFixedRateFlags(in_struct->imageCompressionFixedRateFlags)
+{
+    pNext = SafePnextCopy(in_struct->pNext);
+}
+
+safe_VkImageCompressionPropertiesEXT::safe_VkImageCompressionPropertiesEXT() :
+    sType(VK_STRUCTURE_TYPE_IMAGE_COMPRESSION_PROPERTIES_EXT),
+    pNext(nullptr)
+{}
+
+safe_VkImageCompressionPropertiesEXT::safe_VkImageCompressionPropertiesEXT(const safe_VkImageCompressionPropertiesEXT& copy_src)
+{
+    sType = copy_src.sType;
+    imageCompressionFlags = copy_src.imageCompressionFlags;
+    imageCompressionFixedRateFlags = copy_src.imageCompressionFixedRateFlags;
+    pNext = SafePnextCopy(copy_src.pNext);
+}
+
+safe_VkImageCompressionPropertiesEXT& safe_VkImageCompressionPropertiesEXT::operator=(const safe_VkImageCompressionPropertiesEXT& copy_src)
+{
+    if (&copy_src == this) return *this;
+
+    if (pNext)
+        FreePnextChain(pNext);
+
+    sType = copy_src.sType;
+    imageCompressionFlags = copy_src.imageCompressionFlags;
+    imageCompressionFixedRateFlags = copy_src.imageCompressionFixedRateFlags;
+    pNext = SafePnextCopy(copy_src.pNext);
+
+    return *this;
+}
+
+safe_VkImageCompressionPropertiesEXT::~safe_VkImageCompressionPropertiesEXT()
+{
+    if (pNext)
+        FreePnextChain(pNext);
+}
+
+void safe_VkImageCompressionPropertiesEXT::initialize(const VkImageCompressionPropertiesEXT* in_struct)
+{
+    sType = in_struct->sType;
+    imageCompressionFlags = in_struct->imageCompressionFlags;
+    imageCompressionFixedRateFlags = in_struct->imageCompressionFixedRateFlags;
+    pNext = SafePnextCopy(in_struct->pNext);
+}
+
+void safe_VkImageCompressionPropertiesEXT::initialize(const safe_VkImageCompressionPropertiesEXT* copy_src)
+{
+    sType = copy_src->sType;
+    imageCompressionFlags = copy_src->imageCompressionFlags;
+    imageCompressionFixedRateFlags = copy_src->imageCompressionFixedRateFlags;
+    pNext = SafePnextCopy(copy_src->pNext);
+}
+
 safe_VkPhysicalDevice4444FormatsFeaturesEXT::safe_VkPhysicalDevice4444FormatsFeaturesEXT(const VkPhysicalDevice4444FormatsFeaturesEXT* in_struct) :
     sType(in_struct->sType),
     formatA4R4G4B4(in_struct->formatA4R4G4B4),
@@ -47032,6 +47231,59 @@ void safe_VkPhysicalDevicePageableDeviceLocalMemoryFeaturesEXT::initialize(const
     pNext = SafePnextCopy(copy_src->pNext);
 }
 
+safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT::safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT(const VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT* in_struct) :
+    sType(in_struct->sType),
+    imageCompressionControlSwapchain(in_struct->imageCompressionControlSwapchain)
+{
+    pNext = SafePnextCopy(in_struct->pNext);
+}
+
+safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT::safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT() :
+    sType(VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_FEATURES_EXT),
+    pNext(nullptr)
+{}
+
+safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT::safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT(const safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT& copy_src)
+{
+    sType = copy_src.sType;
+    imageCompressionControlSwapchain = copy_src.imageCompressionControlSwapchain;
+    pNext = SafePnextCopy(copy_src.pNext);
+}
+
+safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT& safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT::operator=(const safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT& copy_src)
+{
+    if (&copy_src == this) return *this;
+
+    if (pNext)
+        FreePnextChain(pNext);
+
+    sType = copy_src.sType;
+    imageCompressionControlSwapchain = copy_src.imageCompressionControlSwapchain;
+    pNext = SafePnextCopy(copy_src.pNext);
+
+    return *this;
+}
+
+safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT::~safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT()
+{
+    if (pNext)
+        FreePnextChain(pNext);
+}
+
+void safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT::initialize(const VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT* in_struct)
+{
+    sType = in_struct->sType;
+    imageCompressionControlSwapchain = in_struct->imageCompressionControlSwapchain;
+    pNext = SafePnextCopy(in_struct->pNext);
+}
+
+void safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT::initialize(const safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT* copy_src)
+{
+    sType = copy_src->sType;
+    imageCompressionControlSwapchain = copy_src->imageCompressionControlSwapchain;
+    pNext = SafePnextCopy(copy_src->pNext);
+}
+
 safe_VkDeviceOrHostAddressKHR::safe_VkDeviceOrHostAddressKHR(const VkDeviceOrHostAddressKHR* in_struct)
 {
     initialize(in_struct);
@@ -49633,6 +49885,15 @@ void *SafePnextCopy(const void *pNext) {
         case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_ROBUSTNESS_FEATURES_EXT:
             safe_pNext = new safe_VkPhysicalDeviceImageRobustnessFeaturesEXT(reinterpret_cast<const VkPhysicalDeviceImageRobustnessFeaturesEXT *>(pNext));
             break;
+        case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_FEATURES_EXT:
+            safe_pNext = new safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT(reinterpret_cast<const VkPhysicalDeviceImageCompressionControlFeaturesEXT *>(pNext));
+            break;
+        case VK_STRUCTURE_TYPE_IMAGE_COMPRESSION_CONTROL_EXT:
+            safe_pNext = new safe_VkImageCompressionControlEXT(reinterpret_cast<const VkImageCompressionControlEXT *>(pNext));
+            break;
+        case VK_STRUCTURE_TYPE_IMAGE_COMPRESSION_PROPERTIES_EXT:
+            safe_pNext = new safe_VkImageCompressionPropertiesEXT(reinterpret_cast<const VkImageCompressionPropertiesEXT *>(pNext));
+            break;
         case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT:
             safe_pNext = new safe_VkPhysicalDevice4444FormatsFeaturesEXT(reinterpret_cast<const VkPhysicalDevice4444FormatsFeaturesEXT *>(pNext));
             break;
@@ -49713,6 +49974,9 @@ void *SafePnextCopy(const void *pNext) {
             break;
         case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PAGEABLE_DEVICE_LOCAL_MEMORY_FEATURES_EXT:
             safe_pNext = new safe_VkPhysicalDevicePageableDeviceLocalMemoryFeaturesEXT(reinterpret_cast<const VkPhysicalDevicePageableDeviceLocalMemoryFeaturesEXT *>(pNext));
+            break;
+        case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_FEATURES_EXT:
+            safe_pNext = new safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT(reinterpret_cast<const VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT *>(pNext));
             break;
         case VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_KHR:
             safe_pNext = new safe_VkWriteDescriptorSetAccelerationStructureKHR(reinterpret_cast<const VkWriteDescriptorSetAccelerationStructureKHR *>(pNext));
@@ -50770,6 +51034,15 @@ void FreePnextChain(const void *pNext) {
         case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_ROBUSTNESS_FEATURES_EXT:
             delete reinterpret_cast<const safe_VkPhysicalDeviceImageRobustnessFeaturesEXT *>(header);
             break;
+        case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_FEATURES_EXT:
+            delete reinterpret_cast<const safe_VkPhysicalDeviceImageCompressionControlFeaturesEXT *>(header);
+            break;
+        case VK_STRUCTURE_TYPE_IMAGE_COMPRESSION_CONTROL_EXT:
+            delete reinterpret_cast<const safe_VkImageCompressionControlEXT *>(header);
+            break;
+        case VK_STRUCTURE_TYPE_IMAGE_COMPRESSION_PROPERTIES_EXT:
+            delete reinterpret_cast<const safe_VkImageCompressionPropertiesEXT *>(header);
+            break;
         case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT:
             delete reinterpret_cast<const safe_VkPhysicalDevice4444FormatsFeaturesEXT *>(header);
             break;
@@ -50850,6 +51123,9 @@ void FreePnextChain(const void *pNext) {
             break;
         case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PAGEABLE_DEVICE_LOCAL_MEMORY_FEATURES_EXT:
             delete reinterpret_cast<const safe_VkPhysicalDevicePageableDeviceLocalMemoryFeaturesEXT *>(header);
+            break;
+        case VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_COMPRESSION_CONTROL_SWAPCHAIN_FEATURES_EXT:
+            delete reinterpret_cast<const safe_VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT *>(header);
             break;
         case VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_KHR:
             delete reinterpret_cast<const safe_VkWriteDescriptorSetAccelerationStructureKHR *>(header);

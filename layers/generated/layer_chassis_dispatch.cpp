@@ -8600,6 +8600,21 @@ void DispatchCmdSetFragmentShadingRateEnumNV(
 
 }
 
+void DispatchGetImageCompressionPropertiesEXT(
+    VkDevice                                    device,
+    VkImage                                     image,
+    VkImageAspectFlags                          aspectMask,
+    VkImageCompressionPropertiesEXT*            pProperties)
+{
+    auto layer_data = GetLayerDataPtr(get_dispatch_key(device), layer_data_map);
+    if (!wrap_handles) return layer_data->device_dispatch_table.GetImageCompressionPropertiesEXT(device, image, aspectMask, pProperties);
+    {
+        image = layer_data->Unwrap(image);
+    }
+    layer_data->device_dispatch_table.GetImageCompressionPropertiesEXT(device, image, aspectMask, pProperties);
+
+}
+
 #ifdef VK_USE_PLATFORM_WIN32_KHR
 
 VkResult DispatchAcquireWinrtDisplayNV(
