@@ -2135,6 +2135,11 @@ bool PreCallValidateCmdSetFragmentShadingRateEnumNV(
     VkCommandBuffer                             commandBuffer,
     VkFragmentShadingRateNV                     shadingRate,
     const VkFragmentShadingRateCombinerOpKHR    combinerOps[2]) const override;
+bool PreCallValidateGetImageCompressionPropertiesEXT(
+    VkDevice                                    device,
+    VkImage                                     image,
+    VkImageAspectFlags                          aspectMask,
+    VkImageCompressionPropertiesEXT*            pProperties) const override;
 #ifdef VK_USE_PLATFORM_WIN32_KHR
 bool PreCallValidateAcquireWinrtDisplayNV(
     VkPhysicalDevice                            physicalDevice,

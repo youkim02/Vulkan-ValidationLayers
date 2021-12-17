@@ -1064,6 +1064,9 @@ typedef enum InterceptId{
     InterceptIdPreCallValidateCmdSetFragmentShadingRateEnumNV,
     InterceptIdPreCallRecordCmdSetFragmentShadingRateEnumNV,
     InterceptIdPostCallRecordCmdSetFragmentShadingRateEnumNV,
+    InterceptIdPreCallValidateGetImageCompressionPropertiesEXT,
+    InterceptIdPreCallRecordGetImageCompressionPropertiesEXT,
+    InterceptIdPostCallRecordGetImageCompressionPropertiesEXT,
     InterceptIdPreCallValidateCmdSetVertexInputEXT,
     InterceptIdPreCallRecordCmdSetVertexInputEXT,
     InterceptIdPostCallRecordCmdSetVertexInputEXT,
@@ -2382,6 +2385,9 @@ void ValidationObject::InitObjectDispatchVectors() {
     BUILD_DISPATCH_VECTOR(PreCallValidateCmdSetFragmentShadingRateEnumNV);
     BUILD_DISPATCH_VECTOR(PreCallRecordCmdSetFragmentShadingRateEnumNV);
     BUILD_DISPATCH_VECTOR(PostCallRecordCmdSetFragmentShadingRateEnumNV);
+    BUILD_DISPATCH_VECTOR(PreCallValidateGetImageCompressionPropertiesEXT);
+    BUILD_DISPATCH_VECTOR(PreCallRecordGetImageCompressionPropertiesEXT);
+    BUILD_DISPATCH_VECTOR(PostCallRecordGetImageCompressionPropertiesEXT);
 #ifdef VK_USE_PLATFORM_WIN32_KHR
 #endif
 #ifdef VK_USE_PLATFORM_WIN32_KHR

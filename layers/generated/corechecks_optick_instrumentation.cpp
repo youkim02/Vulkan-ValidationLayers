@@ -7295,6 +7295,22 @@ void CoreChecksOptickInstrumented::PostCallRecordCmdSetFragmentShadingRateEnumNV
     CoreChecks::PostCallRecordCmdSetFragmentShadingRateEnumNV(commandBuffer, shadingRate, combinerOps);
 }
 
+bool CoreChecksOptickInstrumented::PreCallValidateGetImageCompressionPropertiesEXT(VkDevice device, VkImage image, VkImageAspectFlags aspectMask, VkImageCompressionPropertiesEXT* pProperties) const {
+    OPTICK_EVENT();
+    auto result = CoreChecks::PreCallValidateGetImageCompressionPropertiesEXT(device, image, aspectMask, pProperties);
+    return result;
+}
+
+void CoreChecksOptickInstrumented::PreCallRecordGetImageCompressionPropertiesEXT(VkDevice device, VkImage image, VkImageAspectFlags aspectMask, VkImageCompressionPropertiesEXT* pProperties) {
+    OPTICK_EVENT();
+    CoreChecks::PreCallRecordGetImageCompressionPropertiesEXT(device, image, aspectMask, pProperties);
+}
+
+void CoreChecksOptickInstrumented::PostCallRecordGetImageCompressionPropertiesEXT(VkDevice device, VkImage image, VkImageAspectFlags aspectMask, VkImageCompressionPropertiesEXT* pProperties) {
+    OPTICK_EVENT();
+    CoreChecks::PostCallRecordGetImageCompressionPropertiesEXT(device, image, aspectMask, pProperties);
+}
+
 #ifdef VK_USE_PLATFORM_WIN32_KHR
 bool CoreChecksOptickInstrumented::PreCallValidateAcquireWinrtDisplayNV(VkPhysicalDevice physicalDevice, VkDisplayKHR display) const {
     OPTICK_EVENT();

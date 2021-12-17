@@ -11182,6 +11182,30 @@ VKAPI_ATTR void VKAPI_CALL CmdSetFragmentShadingRateEnumNV(
 
 
 
+VKAPI_ATTR void VKAPI_CALL GetImageCompressionPropertiesEXT(
+    VkDevice                                    device,
+    VkImage                                     image,
+    VkImageAspectFlags                          aspectMask,
+    VkImageCompressionPropertiesEXT*            pProperties) {
+    auto layer_data = GetLayerDataPtr(get_dispatch_key(device), layer_data_map);
+    bool skip = false;
+    for (auto intercept : layer_data->intercept_vectors[InterceptIdPreCallValidateGetImageCompressionPropertiesEXT]) {
+        auto lock = intercept->ReadLock();
+        skip |= (const_cast<const ValidationObject*>(intercept))->PreCallValidateGetImageCompressionPropertiesEXT(device, image, aspectMask, pProperties);
+        if (skip) return;
+    }
+    for (auto intercept : layer_data->intercept_vectors[InterceptIdPreCallRecordGetImageCompressionPropertiesEXT]) {
+        auto lock = intercept->WriteLock();
+        intercept->PreCallRecordGetImageCompressionPropertiesEXT(device, image, aspectMask, pProperties);
+    }
+    DispatchGetImageCompressionPropertiesEXT(device, image, aspectMask, pProperties);
+    for (auto intercept : layer_data->intercept_vectors[InterceptIdPostCallRecordGetImageCompressionPropertiesEXT]) {
+        auto lock = intercept->WriteLock();
+        intercept->PostCallRecordGetImageCompressionPropertiesEXT(device, image, aspectMask, pProperties);
+    }
+}
+
+
 
 
 #ifdef VK_USE_PLATFORM_WIN32_KHR
@@ -11875,6 +11899,7 @@ VKAPI_ATTR void VKAPI_CALL SetDeviceMemoryPriorityEXT(
         intercept->PostCallRecordSetDeviceMemoryPriorityEXT(device, memory, priority);
     }
 }
+
 
 
 VKAPI_ATTR VkResult VKAPI_CALL CreateAccelerationStructureKHR(
@@ -12920,6 +12945,7 @@ const layer_data::unordered_map<std::string, function_data> name_to_funcptr_map 
     {"vkSetPrivateDataEXT", {kFuncTypeDev, (void*)SetPrivateDataEXT}},
     {"vkGetPrivateDataEXT", {kFuncTypeDev, (void*)GetPrivateDataEXT}},
     {"vkCmdSetFragmentShadingRateEnumNV", {kFuncTypeDev, (void*)CmdSetFragmentShadingRateEnumNV}},
+    {"vkGetImageCompressionPropertiesEXT", {kFuncTypeDev, (void*)GetImageCompressionPropertiesEXT}},
 #ifdef VK_USE_PLATFORM_WIN32_KHR
     {"vkAcquireWinrtDisplayNV", {kFuncTypePdev, (void*)AcquireWinrtDisplayNV}},
 #endif
