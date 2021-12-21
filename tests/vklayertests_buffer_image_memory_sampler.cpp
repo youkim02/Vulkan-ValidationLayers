@@ -14992,3 +14992,161 @@ TEST_F(VkLayerTest, ImageViewMinLodFeature) {
 
     CreateImageViewTest(*this, &ivci, "VUID-VkImageViewMinLodCreateInfoEXT-minLod-06455");
 }
+
+TEST_F(VkLayerTest, InvalidImageCompressionControl) {
+    TEST_DESCRIPTION("Checks image compression controls with invalid parameters.");
+    SetTargetApiVersion(VK_API_VERSION_1_2);
+    AddRequiredExtensions(VK_EXT_IMAGE_COMPRESSION_CONTROL_EXTENSION_NAME);
+    AddRequiredExtensions(VK_KHR_SAMPLER_YCBCR_CONVERSION_EXTENSION_NAME);
+
+    auto image_compression_control = LvlInitStruct<VkPhysicalDeviceImageCompressionControlFeaturesEXT>();
+    auto features2 = LvlInitStruct<VkPhysicalDeviceFeatures2>(&image_compression_control);
+
+    ASSERT_NO_FATAL_FAILURE(InitFrameworkAndRetrieveFeatures(features2));
+
+    if (!AreRequestedExtensionsEnabled()) {
+        printf("%s Extension is not supported.\n", kSkipPrefix, VK_EXT_IMAGE_COMPRESSION_CONTROL_EXTENSION_NAME);
+        return;
+    }
+
+    if (!image_compression_control.imageCompressionControl) {
+        printf("%s Test requires (unsupported) imageCompressionControl , skipping\n", kSkipPrefix);
+        return;
+    }
+
+    const bool multi_plane_extensions = CanEnableDeviceExtension(VK_KHR_SAMPLER_YCBCR_CONVERSION_EXTENSION_NAME);
+
+    // A bit set flag bit
+    ASSERT_NO_FATAL_FAILURE(InitState());
+    {
+        auto compression_control = LvlInitStruct<VkImageCompressionControlEXT>();  // specify the desired compression settings
+        compression_control.flags = VK_IMAGE_COMPRESSION_FIXED_RATE_DEFAULT_EXT | VK_IMAGE_COMPRESSION_DISABLED_EXT;
+
+        auto image_create_info = VkImageObj::ImageCreateInfo2D(128, 128, 1, 1, VK_FORMAT_R8G8B8A8_UNORM,
+                                                               VK_IMAGE_USAGE_TRANSFER_DST_BIT, VK_IMAGE_TILING_OPTIMAL);
+        image_create_info.pNext = &compression_control;
+
+        CreateImageTest(*this, &image_create_info, "VUID**** VkImageCompressionControlEXT.flags should be a bit set");
+    }
+
+    // Explicit Fixed Rate
+    {
+        auto compression_control = LvlInitStruct<VkImageCompressionControlEXT>();  // specify the desired compression settings
+        compression_control.flags = VK_IMAGE_COMPRESSION_FIXED_RATE_EXPLICIT_EXT;
+        compression_control.pFixedRateFlags = nullptr;
+
+        auto image_create_info = VkImageObj::ImageCreateInfo2D(128, 128, 1, 1, VK_FORMAT_R8G8B8A8_UNORM,
+                                                               VK_IMAGE_USAGE_TRANSFER_SRC_BIT, VK_IMAGE_TILING_OPTIMAL);
+        image_create_info.pNext = &compression_control;
+
+        CreateImageTest(*this, &image_create_info,
+                        "VUID**** If VkImageCompressionControlEXT.flags explicit ext, it should have pFixedFlags");
+    }
+
+    // Image creation lambda
+    const auto create_compressed_image = [&](VkFormat format, VkImageObj &image) -> bool {
+        auto compression_control = LvlInitStruct<VkImageCompressionControlEXT>();  // specify the desired compression settings
+        compression_control.flags = VK_IMAGE_COMPRESSION_FIXED_RATE_DEFAULT_EXT;
+
+        auto image_create_info = VkImageObj::ImageCreateInfo2D(128, 128, 1, 1, VK_FORMAT_R8G8B8A8_UNORM,
+                                                               VK_IMAGE_USAGE_TRANSFER_SRC_BIT, VK_IMAGE_TILING_OPTIMAL);
+        image_create_info.pNext = &compression_control;
+
+        bool supported = ImageFormatAndFeaturesSupported(instance(), gpu(), image_create_info, VK_FORMAT_FEATURE_TRANSFER_SRC_BIT);
+
+        if (supported) {
+            image.init(&image_create_info);
+        }
+        m_errorMonitor->VerifyNotFound();
+
+        return supported;
+    };
+
+    auto vkGetImageCompressionPropertiesEXT =
+        (PFN_vkGetImageCompressionPropertiesEXT)vk::GetInstanceProcAddr(instance(), "vkGetImageCompressionPropertiesEXT");
+    ASSERT_TRUE(vkGetImageCompressionPropertiesEXT != nullptr);
+
+    // Color format aspect
+    {
+        VkImageObj image(m_device);
+        if (create_compressed_image(VK_FORMAT_R8G8B8A8_UNORM, image)) {
+            auto compressionProperties = LvlInitStruct<VkImageCompressionPropertiesEXT>();
+
+            m_errorMonitor->SetDesiredFailureMsg(kErrorBit,
+                                                 "VUID-Should VkImageCompressionPropertiesEXT.aspectMask be color aspect");
+            vkGetImageCompressionPropertiesEXT(m_device->handle(), image.handle(), VK_IMAGE_ASPECT_PLANE_0_BIT,
+                                               &compressionProperties);
+            m_errorMonitor->VerifyFound();
+        }
+    }
+
+    // Depth format, Stencil aspect
+    const VkFormat depth_format = FindSupportedDepthOnlyFormat(gpu());
+    if (depth_format != VK_FORMAT_UNDEFINED) {
+        VkImageObj image(m_device);
+        if (create_compressed_image(depth_format, image)) {
+            auto compressionProperties = LvlInitStruct<VkImageCompressionPropertiesEXT>();
+
+            m_errorMonitor->SetDesiredFailureMsg(kErrorBit, "VUID-should include stencilMask need stencil format");
+            vkGetImageCompressionPropertiesEXT(m_device->handle(), image.handle(), VK_IMAGE_ASPECT_STENCIL_BIT,
+                                               &compressionProperties);
+            m_errorMonitor->VerifyFound();
+        }
+    }
+
+    // Stencil format, Depth aspect
+    const VkFormat stencil_format = FindSupportedStencilOnlyFormat(gpu());
+    if (stencil_format != VK_FORMAT_UNDEFINED) {
+        VkImageObj image(m_device);
+        if (create_compressed_image(stencil_format, image)) {
+            auto compressionProperties = LvlInitStruct<VkImageCompressionPropertiesEXT>();
+
+            m_errorMonitor->SetDesiredFailureMsg(kErrorBit, "VUID-should include depthMask need depth format");
+            vkGetImageCompressionPropertiesEXT(m_device->handle(), image.handle(), VK_IMAGE_ASPECT_DEPTH_BIT,
+                                               &compressionProperties);
+            m_errorMonitor->VerifyFound();
+        }
+    }
+
+    // Depth/Stencil format aspect, AspectMask should be a bitset
+    const VkFormat depth_stencil_format = FindSupportedDepthStencilFormat(gpu());
+    if (stencil_format != VK_FORMAT_UNDEFINED) {
+        VkImageObj image(m_device);
+        if (create_compressed_image(depth_stencil_format, image)) {
+            auto compressionProperties = LvlInitStruct<VkImageCompressionPropertiesEXT>();
+
+            m_errorMonitor->SetDesiredFailureMsg(kErrorBit, "VUID-should be one bit set");
+            vkGetImageCompressionPropertiesEXT(m_device->handle(), image.handle(),
+                                               (VK_IMAGE_ASPECT_DEPTH_BIT | VK_IMAGE_ASPECT_STENCIL_BIT), &compressionProperties);
+            m_errorMonitor->VerifyFound();
+        }
+    }
+
+    // 2 plane format
+    const VkFormat two_plane_format = VK_FORMAT_G8_B8R8_2PLANE_420_UNORM_KHR;
+    if (multi_plane_extensions) {
+        VkImageObj image(m_device);
+        if (create_compressed_image(two_plane_format, image)) {
+            auto compressionProperties = LvlInitStruct<VkImageCompressionPropertiesEXT>();
+
+            m_errorMonitor->SetDesiredFailureMsg(kErrorBit, "VUID-should be VK_IMAGE_ASPECT_PLANE_[01]_BIT bit set");
+            vkGetImageCompressionPropertiesEXT(m_device->handle(), image.handle(), VK_IMAGE_ASPECT_PLANE_2_BIT,
+                                               &compressionProperties);
+            m_errorMonitor->VerifyFound();
+        }
+    }
+
+    // 3 plane format
+    const VkFormat three_plane_format = VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM_KHR;
+    if (multi_plane_extensions) {
+        VkImageObj image(m_device);
+        if (create_compressed_image(three_plane_format, image)) {
+            auto compressionProperties = LvlInitStruct<VkImageCompressionPropertiesEXT>();
+
+            m_errorMonitor->SetDesiredFailureMsg(kErrorBit, "VUID-should be VK_IMAGE_ASPECT_PLANE_[0-2]_BIT bit set");
+            vkGetImageCompressionPropertiesEXT(m_device->handle(), image.handle(), VK_IMAGE_ASPECT_COLOR_BIT,
+                                               &compressionProperties);
+            m_errorMonitor->VerifyFound();
+        }
+    }
+}
